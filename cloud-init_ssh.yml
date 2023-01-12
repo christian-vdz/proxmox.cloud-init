@@ -1,0 +1,15 @@
+#cloud-config
+hostname: VM101
+manage_etc_hosts: true
+chpasswd:
+  expire: False
+users:
+  - default
+package_upgrade: true
+package_reboot_if_required: true
+locale: fr_FR.UTF-8
+timezone: Europe/Paris
+runcmd:
+  - sed -i 's/[#]*PermitRootLogin yes/PermitRootLogin prohibit-password/g' /etc/ssh/sshd_config
+  - sed -i 's/[#]*PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+  - systemctl reload ssh
